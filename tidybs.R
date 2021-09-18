@@ -1,15 +1,21 @@
-library(tidyr)
-library(readxl)
-library(dplyr)
-library(purrr)
-library(janitor)
-library(readr)
-library(ggplot2)
-library(ggthemes)
-library(scales)
+# library(tidyr)
+# library(readxl)
+# library(dplyr)
+# library(purrr)
+# library(janitor)
+# library(readr)
+# library(ggplot2)
+# library(ggthemes)
+# library(scales)
 
 
+list_of_packages <- c("tidyr", "readxl", "dplyr", "purrr", "janitor", "readr",
+                      "ggplot2", "ggthemes", "scales")
 
+new.packages <- list_of_packages[!(list_of_packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
+lapply(list_of_packages, require, character.only = TRUE)
 
 
 # Read in Data ------------------------------------------------------------
@@ -45,16 +51,11 @@ Natwest_IS <- Natwest$`1.1 - Income Statement`
 
 # Tidy tables -------------------------------------------------------------
 
-# Lloyds_BS_clean <- Lloyds_BS %>%
-#   janitor::remove_empty(c("cols", "rows")) %>% 
-#   janitor::row_to_names(2) %>% 
-#   rename(Item = 1) %>% 
-#   slice(3:n()) %>% 
-#   mutate(across(`2019`:`2020`, readr::parse_number))
 
 
+####################### Lloyds########################
 
-####################### NATWEST########################
+## Balance Sheet
 Lloyds_BS_clean <- Lloyds_BS %>%
   janitor::remove_empty(c("cols", "rows")) %>% 
   janitor::row_to_names(2) %>% 
@@ -85,24 +86,13 @@ Lloyds_BS2_clean <- Lloyds_BS2 %>%
 
 
 
-# Combining the two tabs into one df
+## Combining the two tabs into one df
 Lloyds_BS_final <- bind_rows(Lloyds_BS_clean, Lloyds_BS2_clean)
 
-
-
-
-
-
-# 
-# Lloyds_BS2_clean <- Lloyds_BS2 %>% 
-#   janitor::remove_empty(c("cols", "rows")) %>% 
-#   janitor::row_to_names(2) %>% 
-#   select(Item = 1, 2, 4) %>% 
-#   slice(6:n()) %>% 
-#   mutate(across(`2019`:`2020`, readr::parse_number))
   
 
 
+## Income Statement
 
 Lloyds_IS_clean <- Lloyds_IS  %>% 
   janitor::remove_empty(c("rows", "cols")) %>% 

@@ -2,11 +2,15 @@
 title: "Comparison of Lloyds & Natwest Financial Accounts"
 author: "Dylan Viswambaran"
 date: "18/09/2021"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r source, echo=FALSE, message=FALSE, warning=FALSE}
@@ -20,6 +24,8 @@ In this article we will be exploring the financial results of Lloyds Banking Gro
 
 ## Income statement
 
+### Total Income
+
 The income statement shows how much revenue a company earned over a specific time period in this case we are going to look at the two groups in question over 2019-2020.
 
 ```{r total_income, echo=FALSE}
@@ -30,3 +36,25 @@ total_income
 
 
 `r total_income$data$Entity[1]` total income in 2020 was `r paste0("£", comma(total_income$data$Value[2]))` compared to `r paste0("£", comma(total_income$data$Value[1]))` in 2019 which is a **decrease** of `r percent(abs(total_income$data$Value[2] / total_income$data$Value[1] -1))`
+
+
+### Impairment losses
+
+
+Impairment occurs when a business asset suffers a depreciation in fair market value in excess of the book value of the asset on the company's financial statements. The technical definition of impairment loss is a decrease in net carrying value of an asset greater than the future undisclosed cash flow of the same asset.
+
+One of the contributing factors between 2019 and 2020 is a spike in impairment losses as shown in the chart below. 
+
+```{r impairment}
+
+impairment
+
+
+```
+
+
+`r impairment$data$Entity[3]` total income in 2020 was `r paste0("£", comma(impairment$data$Value[4]))` compared to `r paste0("£", comma(impairment$data$Value[3]))` in 2019 which is an **increase** of `r percent(impairment$data$Value[3] / impairment$data$Value[4])`
+
+
+`r impairment$data$Entity[1]` total income in 2020 was `r paste0("£", comma(impairment$data$Value[2]))` compared to `r paste0("£", comma(impairment$data$Value[1]))` in 2019 which is an **increase** of `r percent(impairment$data$Value[1] / impairment$data$Value[2])`
+
