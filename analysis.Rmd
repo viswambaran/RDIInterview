@@ -10,7 +10,8 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, 
+                      warning = FALSE)
 ```
 
 ```{r source, echo=FALSE, message=FALSE, warning=FALSE}
@@ -38,12 +39,30 @@ total_income
 `r total_income$data$Entity[1]` total income in 2020 was `r paste0("£", comma(total_income$data$Value[2]))` compared to `r paste0("£", comma(total_income$data$Value[1]))` in 2019 which is a **decrease** of `r percent(abs(total_income$data$Value[2] / total_income$data$Value[1] -1))`
 
 
+### Income breakdown
+
+
+
+On the whole both banks did not suffer any real blows to their net interest income over the year with Lloyds Banking Group showing slightly stronger results than Natwest Group despite an overall disappointing year for both Banks. 
+
+We can see here that majority of the poor income results come from a large decrease in **other income**, 
+with both banks having relatively stable **net income interest**. 
+
+```{r income_breakdown}
+
+Total_income_breakdown
+
+```
+
+
 ### Impairment losses
 
 
-Impairment occurs when a business asset suffers a depreciation in fair market value in excess of the book value of the asset on the company's financial statements. The technical definition of impairment loss is a decrease in net carrying value of an asset greater than the future undisclosed cash flow of the same asset.
+>Impairment occurs when a business asset suffers a depreciation in fair market value in excess of the book value of the asset on the company's financial statements. The technical definition of impairment loss is a decrease in net carrying value of an asset greater than the future undisclosed cash flow of the same asset.
 
-One of the contributing factors between 2019 and 2020 is a spike in impairment losses as shown in the chart below. 
+One of the contributing factors between 2019 and 2020 for overall decrease in income is a spike in impairment losses as shown in the chart below. 
+
+This quickly wiped away any marginal increase in income over the year. 
 
 ```{r impairment}
 
@@ -58,3 +77,56 @@ impairment
 
 `r impairment$data$Entity[1]` total income in 2020 was `r paste0("£", comma(impairment$data$Value[2]))` compared to `r paste0("£", comma(impairment$data$Value[1]))` in 2019 which is an **increase** of `r percent(impairment$data$Value[1] / impairment$data$Value[2])`
 
+
+### Profits to Ordinary Shareholders
+
+>Ordinary shares, also called common shares, are stocks sold on a public exchange. Each share of stock generally gives its owner the right to one vote at a company shareholders' meeting. 
+
+Ordinary shareholders are feeling the pain in their pockets over the year. 
+However given the circumstances they have not been left empty handed. They will hope to look towards a strong recovery in the following years to come. 
+
+```{r shareholders}
+
+shareholderProfit
+
+```
+
+
+## Balance Sheet
+
+### Overview 
+
+Both banks have increase the size of their respective balance sheets with Natwest gaining ground on its competitor
+in terms of overall balance sheet size. 
+
+```{r BS_overview}
+
+BalanceSheetOverview
+
+```
+
+
+### Customer deposits
+
+Since the previous year Natwest have also managed to increase their customer deposits by a much larger proportion than its competitor. 
+
+```{r deposits}
+deposits
+
+```
+
+
+
+
+### Loans to customers
+
+Since the previous year Natwest Group have managed to significantly increase their Loans to Customers by a bigger proportion than its competitor.  
+
+This is to be somewhat expected given the large increase in customer deposits. 
+However it can also be said that Lloyds have chosen to use the customer deposits in other ways. 
+
+```{r loans}
+
+loans_customers
+
+```

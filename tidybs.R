@@ -172,6 +172,28 @@ total_income <- consolidated_IS %>%
 
 
 
+Total_income_breakdown <- consolidated_IS %>% 
+  filter(Item %in% c("Net interest income", "Total non-interest income",
+                     "Other income")) %>%
+  mutate(Item = gsub("Total non-interest income", "Other income", Item)) %>%
+  ggplot(aes(x = Year, y = Value, fill = Item)) +
+  geom_bar(stat = "identity",
+           position = position_dodge2(),
+           width = 0.6) + 
+  ggthemes::theme_clean() +
+  facet_wrap(~Entity) +
+  theme(legend.position = "bottom",
+        plot.background = element_blank()) +
+  labs(title = "Total income breakdown",
+       subtitle = "Lloyds suffer from large decrease to other income",
+       y = "£mns") +
+  scale_y_continuous(label = comma) +
+  coord_flip()
+
+
+
+
+
 impairment <- consolidated_IS %>% 
   filter(grepl("Impairment", Item)) %>% 
   mutate(Value = abs(Value)) %>% 
@@ -187,6 +209,88 @@ impairment <- consolidated_IS %>%
        subtitle = "Impairment affecting income",
        y = "£mns") +
   scale_y_continuous(label = comma)
+
+
+shareholderProfit <- consolidated_IS %>% 
+  filter(grepl("ordinary shareholders", Item, ignore.case = TRUE)) %>% 
+  mutate(Value = abs(Value)) %>% 
+  ggplot(aes(x = Year, y = Value, fill = Entity)) +
+  geom_bar(stat = "identity",
+           position = position_dodge2(preserve = "single"),
+           width = 0.6) + 
+  ggthemes::theme_clean() +
+  facet_wrap(~Entity) + 
+  theme(legend.position = "none",
+        plot.background = element_blank()) +
+  labs(title = "Profit attributable to Ordinary Shareholders",
+       subtitle = "Pockets have been hit hard over the year",
+       y = "£mns") +
+  scale_y_continuous(label = comma)
+
   
 
+### Balance Sheet plots ###
+
+BalanceSheetOverview <- consolidated_BS %>% 
+  filter(Item %in% c("Total assets", "Total equity", "Total liabilities"),
+         Type == "Assets") %>% 
+  ggplot(aes(x = Year, y = Value, fill = Entity)) +
+  geom_bar(stat = "identity",
+           position = position_dodge2(preserve = "single"),
+           width = 0.6) + 
+  ggthemes::theme_clean() +
+  #facet_wrap(~Entity) + 
+  theme(legend.position = "bottom",
+        plot.background = element_blank()) +
+  labs(title = "Total Assets",
+       subtitle = "Natwest making ground",
+       y = "£mns") +
+  scale_y_continuous(label = comma)
+
+
+
+
+deposits <- consolidated_BS %>% 
+  filter(Item == "Customer deposits") %>%
+  pivot_wider(names_from = Type, values_from = Value) %>% 
+  group_by(Entity) %>% 
+  summarise(change  = Liabilities / lag(Liabilities) -1) %>%  
+  ggplot(aes(x = Entity, y = change, fill = Entity)) +
+  geom_bar(stat = "identity",
+           position = position_dodge2(preserve = "single"),
+           width = 0.6) + 
+  ggthemes::theme_clean() +
+  #facet_wrap(~Entity) + 
+  theme(legend.position = "none",
+        plot.background = element_blank()) +
+  labs(title = "Customer Deposits",
+       subtitle = "Natwest making ground",
+       y = "% Change") +
+  scale_y_continuous(label = percent) +
+  coord_flip()
+
+  
+  
+
+
+loans_customers <- consolidated_BS %>% 
+  filter(grepl("loans.*customers*", Item, ignore.case = TRUE)) %>%
+  pivot_wider(names_from = Type, values_from = Value) %>% 
+  group_by(Entity) %>% 
+  summarise(change  = Assets / lag(Assets) -1)  %>%
+  ggplot(aes(x = Entity, y = change, fill = Entity)) +
+  geom_bar(stat = "identity",
+           position = position_dodge2(preserve = "single"),
+           width = 0.6) + 
+  ggthemes::theme_clean() +
+  #facet_wrap(~Entity) + 
+  theme(legend.position = "none",
+        plot.background = element_blank()) +
+  labs(title = "Change in 'Loans to Customers'",
+       subtitle = "Natwest significantly increase loans compared to previous year",
+       y = "% Change") +
+  scale_y_continuous(label = percent) + 
+  coord_flip()
+  
+  
 
