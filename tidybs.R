@@ -26,6 +26,7 @@ Natwest_path <- "data-raw/natwest.xlsx"
 
 ## Lloyds
 ## Consolidated Balance sheet is sheet named 37 and consolidated income statement is 35
+## Not neccesary to read in all sheets but done for ease of use 
 Lloyds <- Lloyds_path %>% 
   excel_sheets() %>% 
   set_names() %>% 
@@ -265,7 +266,8 @@ deposits <- consolidated_BS %>%
         plot.background = element_blank()) +
   labs(title = "Customer Deposits",
        subtitle = "Natwest making ground",
-       y = "% Change") +
+       y = "% Change",
+       x = element_blank()) +
   scale_y_continuous(label = percent) +
   coord_flip()
 
@@ -288,7 +290,8 @@ loans_customers <- consolidated_BS %>%
         plot.background = element_blank()) +
   labs(title = "Change in 'Loans to Customers'",
        subtitle = "Natwest significantly increase loans compared to previous year",
-       y = "% Change") +
+       y = "% Change",
+       x = element_blank()) +
   scale_y_continuous(label = percent) + 
   coord_flip()
   
