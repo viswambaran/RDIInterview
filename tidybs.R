@@ -56,7 +56,7 @@ Natwest_IS <- Natwest$`1.1 - Income Statement`
 
 ####################### Lloyds########################
 
-## Balance Sheet
+## Balance Sheets
 Lloyds_BS_clean <- Lloyds_BS %>%
   janitor::remove_empty(c("cols", "rows")) %>% 
   janitor::row_to_names(2) %>% 
@@ -168,7 +168,7 @@ total_income <- consolidated_IS %>%
         plot.background = element_blank()) +
   labs(title = "Total income",
        subtitle = "A tough year affecting both Banks",
-       y = "£mns") +
+       y = "?mns") +
   scale_y_continuous(label = comma)
 
 
@@ -187,7 +187,7 @@ Total_income_breakdown <- consolidated_IS %>%
         plot.background = element_blank()) +
   labs(title = "Total income breakdown",
        subtitle = "Lloyds suffer from large decrease to other income",
-       y = "£mns") +
+       y = "?mns") +
   scale_y_continuous(label = comma) +
   coord_flip()
 
@@ -208,7 +208,7 @@ impairment <- consolidated_IS %>%
         plot.background = element_blank()) +
   labs(title = "Impairment losses",
        subtitle = "Impairment affecting income",
-       y = "£mns") +
+       y = "?mns") +
   scale_y_continuous(label = comma)
 
 
@@ -225,7 +225,7 @@ shareholderProfit <- consolidated_IS %>%
         plot.background = element_blank()) +
   labs(title = "Profit attributable to Ordinary Shareholders",
        subtitle = "Pockets have been hit hard over the year",
-       y = "£mns") +
+       y = "?mns") +
   scale_y_continuous(label = comma)
 
   
@@ -245,7 +245,7 @@ BalanceSheetOverview <- consolidated_BS %>%
         plot.background = element_blank()) +
   labs(title = "Total Assets",
        subtitle = "Natwest making ground",
-       y = "£mns") +
+       y = "?mns") +
   scale_y_continuous(label = comma)
 
 
